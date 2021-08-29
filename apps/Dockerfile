@@ -1,0 +1,12 @@
+# ベースイメージ指定
+FROM golang:1.16
+# ワークディレクトリを指定
+WORKDIR /app
+# ホストOSのapp内全てをWORKDIRにコピー
+COPY . ./
+# ビルド
+RUN go build -o ./server-run ./server
+# コンテナのポートを9090で公開
+EXPOSE 9090
+# アプリ実行
+CMD [ "./server-run" ]
