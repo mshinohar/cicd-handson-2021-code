@@ -12,7 +12,7 @@ type HealthCheck struct {
 }
 
 func init() {
-	stars = make(map[string]int64)
+	stars = SafeStars{v: make(map[string]int64)}
 }
 
 func main() {
@@ -20,10 +20,12 @@ func main() {
 	http.HandleFunc("/health", healthCheckHandler)
 	http.Handle("/", http.FileServer(http.Dir("./web/static")))
 
+	fmt.Println("Server is running...")
 	log.Fatal(http.ListenAndServe(":9090", nil))
 }
 
 func landscapeHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Landscape requested.")
 	projects, err := getCicdProjects()
 	if err != nil {
 		fmt.Println(err)
@@ -38,6 +40,7 @@ func landscapeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func healthCheckHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Health check requested.")
 	json.NewEncoder(w).Encode(HealthCheck{
 		Status: "Healthy",
 	})
