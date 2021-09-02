@@ -1,6 +1,6 @@
 name: GitHub Actions CI
 
-# mainブランチへの「git push」をトリガー
+# mainブランチへの「git push」をトリガー 1
 on:
   push:
     branches: [ main ]
